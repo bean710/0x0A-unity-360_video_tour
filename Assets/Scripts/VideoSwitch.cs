@@ -5,8 +5,6 @@ using UnityEngine.Video;
 
 public class VideoSwitch : MonoBehaviour
 {
-    public bool startsOn = false;
-    
     private VideoPlayer vidComp;
 
     // Start is called before the first frame update
@@ -14,14 +12,19 @@ public class VideoSwitch : MonoBehaviour
     {
         vidComp = GetComponent<VideoPlayer>();
 
-        vidComp.enabled = startsOn;
-
         SphereSwitcher.AddSphereHandler(SphereChange);
     }
 
-    public void SphereChange(string sphereName)
+    public void SphereChange(string sphereName, GameObject player)
     {
-        
-        vidComp.enabled = (sphereName == name);
+        if (sphereName == name)
+        {
+            vidComp.enabled = true;
+            player.transform.position = transform.position;
+        }
+        else
+        {
+            vidComp.enabled = false;
+        }
     }
 }
