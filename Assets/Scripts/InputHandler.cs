@@ -13,6 +13,7 @@ public class InputHandler : MonoBehaviour
     private Transform touchSphereTransform;
 
     private GameObject contact = null;
+    private GameObject lastContact = null;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +25,10 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /**
         if (Input.GetKeyDown("space") || OVRInput.Get(OVRInput.Touch.One))
             SphereSwitcher.SwitchSphere("Cube", gameObject);
+        **/
 
         if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
@@ -43,6 +46,8 @@ public class InputHandler : MonoBehaviour
         int layerMask = 1;
 
         RaycastHit hit;
+        
+        lastContact = contact;
 
         if (Physics.Raycast(rConTransform.position,
                     rConTransform.TransformDirection(Vector3.forward),
@@ -57,6 +62,15 @@ public class InputHandler : MonoBehaviour
         {
             touchSphere.SetActive(false);
             contact = null;
+        }
+
+        if (lastContact != contact)
+        {
+            if (lastContact != null)
+                lastContact.GetComponent<PointerClick>().UnHover();
+
+            if (contact != null)
+                contact.GetComponent<PointerClick>().Hover();
         }
     }
 }
