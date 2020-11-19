@@ -25,10 +25,7 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /**
-        if (Input.GetKeyDown("space") || OVRInput.Get(OVRInput.Touch.One))
-            SphereSwitcher.SwitchSphere("Cube", gameObject);
-        **/
+        CheckContact();
 
         if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
@@ -42,7 +39,7 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    private void FixedUpdate() {
+    private void CheckContact() {
         int layerMask = 1;
 
         RaycastHit hit;
@@ -57,6 +54,12 @@ public class InputHandler : MonoBehaviour
             touchSphereTransform.position = hit.point;
 
             contact = hit.transform.gameObject;
+
+            /*
+            Debug.Log(lastContact == null ? "null" : lastContact.name);
+            Debug.Log(contact == null ? "null" : contact.name);
+            Debug.Log("");
+            */
         }
         else
         {
@@ -64,8 +67,9 @@ public class InputHandler : MonoBehaviour
             contact = null;
         }
 
-        if (lastContact != contact)
+        if (!GameObject.ReferenceEquals(contact, lastContact))
         {
+            Debug.Log("Object point changed");
             if (lastContact != null)
                 lastContact.GetComponent<PointerClick>().UnHover();
 

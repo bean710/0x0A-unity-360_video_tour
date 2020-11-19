@@ -21,6 +21,7 @@ public class VideoSwitch : MonoBehaviour
         {
             vidComp.enabled = true;
             player.transform.position = transform.position;
+            SphereSwitcher.DoneSwitch();
         }
         else
         {
