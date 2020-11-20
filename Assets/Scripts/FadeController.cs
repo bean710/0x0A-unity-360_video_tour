@@ -62,7 +62,7 @@ public class FadeController : MonoBehaviour
                 fadeAmount = c.a - (FadeSpeed * Time.deltaTime);
                 fadeAmount = fadeAmount < 0f ? 0f : fadeAmount;
 
-                FRend.material.color = new Color(c.a, c.g, c.b, fadeAmount);
+                FRend.material.color = new Color(c.r, c.g, c.b, fadeAmount);
 
                 yield return null;
             }
